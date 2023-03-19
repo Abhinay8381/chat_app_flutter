@@ -112,21 +112,27 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   chatMessages() {
-    return StreamBuilder(
-      stream: chats,
-      builder: (context, AsyncSnapshot snapshot) {
-        return snapshot.hasData
-            ? ListView.builder(
-                itemCount: snapshot.data.docs.length,
-                itemBuilder: (context, index) {
-                  return MessageTile(
-                      message: snapshot.data.docs[index]['message'],
-                      sender: snapshot.data.docs[index]['messageSender'],
-                      isSentByMe: widget.userName ==
-                          snapshot.data.docs[index]['messageSender']);
-                })
-            : Container();
-      },
+    return Positioned(
+      top: 0,
+      bottom: MediaQuery.of(context).size.height / 9,
+      left: 0,
+      right: 0,
+      child: StreamBuilder(
+        stream: chats,
+        builder: (context, AsyncSnapshot snapshot) {
+          return snapshot.hasData
+              ? ListView.builder(
+                  itemCount: snapshot.data.docs.length,
+                  itemBuilder: (context, index) {
+                    return MessageTile(
+                        message: snapshot.data.docs[index]['message'],
+                        sender: snapshot.data.docs[index]['messageSender'],
+                        isSentByMe: widget.userName ==
+                            snapshot.data.docs[index]['messageSender']);
+                  })
+              : Container();
+        },
+      ),
     );
   }
 
